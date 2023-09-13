@@ -43,7 +43,8 @@ for (let i = 0; i < SHUFFLED_PAIRS.length; i++) {
 runGame();
 
 function runGame() {
-  while (true) {
+  let isWin = false;
+  while (!isWin) {
     const card1Index = cardSelection();
     if (card1Index === null) { break; }
     const card1 = SHUFFLED_PAIRS[card1Index];
@@ -57,7 +58,7 @@ function runGame() {
       SHUFFLED_PAIRS[card2Index] = null;
     }
 
-    checkWinCondition();
+    isWin = checkWinCondition();
   }
 }
 
@@ -69,11 +70,9 @@ function checkWinCondition() {
   for (let i = 0; i < SHUFFLED_PAIRS.length; i++) {
     let val = SHUFFLED_PAIRS[i];
     if (val !== null) {
-      break;
-    }
-    if (i === SHUFFLED_PAIRS.length - 1) {
-      alert("You won!");
-      return;
+      return false;
     }
   }
+  alert("You won!");
+  return true;
 }
