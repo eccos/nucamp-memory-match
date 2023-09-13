@@ -29,6 +29,8 @@ let testTwo = shuffle(array);
 console.log(testTwo);
 
 // branch 3: add logic to display grid (prompt()) and select card
+const MATCH_CHAR = "-";
+
 runGame();
 
 function runGame() {
@@ -53,8 +55,8 @@ function runGame() {
     const card2 = shuffledCards[card2Index];
 
     if (card1Index !== card2Index && card1 === card2) {
-      shuffledCards[card1Index] = null;
-      shuffledCards[card2Index] = null;
+      shuffledCards[card1Index] = MATCH_CHAR;
+      shuffledCards[card2Index] = MATCH_CHAR;
     }
 
     isWin = checkWinCondition(shuffledCards);
@@ -62,7 +64,7 @@ function runGame() {
 }
 
 function cardSelection(cards, cardIndexLabels, selectionNum) {
-  return prompt(`Cards: ${cards} \nIndex: ${cardIndexLabels} \nEnter index of card ${selectionNum} to select`);
+  return prompt(`Cards: ${cards.join(', ')} \nIndex: ${cardIndexLabels.join(', ')} \nEnter index to select card ${selectionNum}`);
 }
 
 function checkWinCondition(cards) {
