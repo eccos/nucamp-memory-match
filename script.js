@@ -47,27 +47,37 @@ function runGame() {
   let isWin = false;
   while (!isWin) {
     let selectionNum = 1;
-    const phrase = `Enter index to select card ${selectionNum} \n${cardIndexLabels.join(', ')}`;
-    let cardIndex1 = prompt(phrase);
+    const enterIndexPhrase = `Enter index to select card`;
+    const invalidPhrase = `Invalid selection. Try again.`;
+
+    let cardIndex1 = prompt(`${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
     if (cardIndex1 === null) { return; }
     cardIndex1 = parseInt(cardIndex1);
-    while (isNaN(cardIndex1) || cardIndex1 < 0 || cardIndex1 > cards.length - 1) {
-      cardIndex1 = parseInt(prompt(`Invalid selection. Try again.\n ${phrase}`));
+    while (isNaN(cardIndex1) || !cardIndexLabels.includes(cardIndex1)) {
+      cardIndex1 = prompt(`${invalidPhrase} \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+      if (cardIndex1 === null) { return; }
+      cardIndex1 = parseInt(cardIndex1);
     }
     const card1 = cards[cardIndex1];
 
     selectionNum = 2;
-    let cardIndex2 = prompt(phrase);
+    let cardIndex2 = prompt(`Flipped over card at index ${cardIndex1} to reveal ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
     if (cardIndex2 === null) { return; }
-    cardIndex1 = parseInt(cardIndex1);
-    while (isNaN(cardIndex2) || cardIndex2 < 0 || cardIndex2 > cards.length - 1 || cardIndex2 === cardIndex1) {
-      cardIndex2 = parseInt(prompt(`Invalid selection. Try again.\n ${phrase}`));
+    cardIndex2 = parseInt(cardIndex2);
+    while (isNaN(cardIndex2) || !cardIndexLabels.includes(cardIndex2) || cardIndex2 === cardIndex1) {
+      cardIndex2 = prompt(`${invalidPhrase} \nSelected card ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+      if (cardIndex2 === null) { return; }
+      cardIndex2 = parseInt(cardIndex2);
     }
     const card2 = cards[cardIndex2];
 
+    let phrase2 = `Flipped over card at index ${cardIndex2} to reveal ${card2}.`
     if (card1 === card2) {
-      cards[cardIndex1] = MATCH_CHAR;
-      cards[cardIndex2] = MATCH_CHAR;
+      alert(`${phrase2} \nCards ${card1} and ${card2} match!`);
+      cardIndexLabels.splice(cardIndexLabels.indexOf(cardIndex1), 1);
+      cardIndexLabels.splice(cardIndexLabels.indexOf(cardIndex2), 1);
+    } else {
+      alert(`${phrase2} \nCards ${card1} and ${card2} don't match.`);
     }
 
     isWin = checkWinCondition(cards);
