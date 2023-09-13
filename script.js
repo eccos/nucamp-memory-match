@@ -7,7 +7,6 @@ function chooseRandomNumber(array) {
 let test = chooseRandomNumber(array);
 console.log(test);
 
-
 function shuffle(array) {
   let currentIndex = array.length, randomIndex;
 
@@ -29,7 +28,7 @@ function shuffle(array) {
 let testTwo = shuffle(array);
 console.log(testTwo);
 
-// branch 3: add logic to display grid (prompt()) and select card (maybe x,y coord?)
+// branch 3: add logic to display grid (prompt()) and select card
 runGame();
 
 function runGame() {
@@ -45,12 +44,12 @@ function runGame() {
 
   let isWin = false;
   while (!isWin) {
-    const card1Index = cardSelection(shuffledCards, cardIndexLabels);
+    const card1Index = cardSelection(shuffledCards, cardIndexLabels, 1);
     if (card1Index === null) { break; }
     const card1 = shuffledCards[card1Index];
 
-    const card2Index = cardSelection(shuffledCards, cardIndexLabels);
-    if (card1Index === null) { break; }
+    const card2Index = cardSelection(shuffledCards, cardIndexLabels, 2);
+    if (card2Index === null) { break; }
     const card2 = shuffledCards[card2Index];
 
     if (card1Index !== card2Index && card1 === card2) {
@@ -62,8 +61,8 @@ function runGame() {
   }
 }
 
-function cardSelection(cards, cardIndexLabels) {
-  return prompt(`Cards: ${cards} \nIndex: ${cardIndexLabels} \nEnter index of card to select`);
+function cardSelection(cards, cardIndexLabels, selectionNum) {
+  return prompt(`Cards: ${cards} \nIndex: ${cardIndexLabels} \nEnter index of card ${selectionNum} to select`);
 }
 
 function checkWinCondition(cards) {
