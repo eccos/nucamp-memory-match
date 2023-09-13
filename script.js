@@ -30,37 +30,50 @@ let testTwo = shuffle(array);
 console.log(testTwo);
 
 // branch 3: add logic to display grid (prompt()) and select card (maybe x,y coord?)
-let gridArr = shuffle([4, 5, 6, 5, 4, 6]);
+const UNIQUE_NUMS = [1, 2, 3];
+const PAIR_NUMS = UNIQUE_NUMS.concat(UNIQUE_NUMS);
+const SHUFFLED_PAIRS = shuffle(PAIR_NUMS);
+console.log("shuffledPairs: " + SHUFFLED_PAIRS);
+
+const INDEX_LABELS = [];
+for (let i = 0; i < SHUFFLED_PAIRS.length; i++) {
+  INDEX_LABELS.push(i);
+}
 
 runGame();
+
 function runGame() {
   while (true) {
-    let coord1 = prompt(`${gridArr} \nEnter x,y coordinates of card 1 to select`);
-    if (coord1 === null) { break; }
+    const card1Index = cardSelection();
+    if (card1Index === null) { break; }
+    const card1 = SHUFFLED_PAIRS[card1Index];
 
-    let x1 = coord1;
-    let card1 = gridArr[x1];
-    console.log(card1);
+    const card2Index = cardSelection();
+    if (card1Index === null) { break; }
+    const card2 = SHUFFLED_PAIRS[card2Index];
 
-    let coord2 = prompt(`${gridArr} \nEnter x,y coordinates of card 2 to select`);
-    let x2 = coord2;
-    let card2 = gridArr[x2];
-
-    if (card1 === card2 && x1 !== x2) {
-      gridArr[x1] = null;
-      gridArr[x2] = null;
+    if (card1Index !== card2Index && card1 === card2) {
+      SHUFFLED_PAIRS[card1Index] = null;
+      SHUFFLED_PAIRS[card2Index] = null;
     }
 
-    // win condition
-    for (let i = 0; i < gridArr.length; i++) {
-      let val = gridArr[i];
-      if (val !== null) {
-        break;
-      }
-      if (i === gridArr.length - 1) {
-        alert("You won!");
-        return;
-      }
+    checkWinCondition();
+  }
+}
+
+function cardSelection() {
+  return prompt(`Cards: ${SHUFFLED_PAIRS} \nIndex: ${INDEX_LABELS} \nEnter index of card to select`);
+}
+
+function checkWinCondition() {
+  for (let i = 0; i < SHUFFLED_PAIRS.length; i++) {
+    let val = SHUFFLED_PAIRS[i];
+    if (val !== null) {
+      break;
+    }
+    if (i === SHUFFLED_PAIRS.length - 1) {
+      alert("You won!");
+      return;
     }
   }
 }
