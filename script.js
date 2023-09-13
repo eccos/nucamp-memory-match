@@ -36,35 +36,46 @@ runGame();
 function runGame() {
   const uniqueCards = [1, 2, 3];
   const pairCards = uniqueCards.concat(uniqueCards);
-  const shuffledCards = shuffle(pairCards);
-  console.log(Object.keys({ shuffledCards })[0], shuffledCards);
+  const cards = shuffle(pairCards);
+  console.log("Shuffled Cards: " + cards);
 
   const cardIndexLabels = [];
-  for (let i = 0; i < shuffledCards.length; i++) {
+  for (let i = 0; i < cards.length; i++) {
     cardIndexLabels.push(i);
   }
 
   let isWin = false;
   while (!isWin) {
-    const card1Index = cardSelection(shuffledCards, cardIndexLabels, 1);
-    if (card1Index === null) { break; }
-    const card1 = shuffledCards[card1Index];
+    let selectionNum = 1;
+    const phrase = `Enter index to select card ${selectionNum} \n${cardIndexLabels.join(', ')}`;
+    let cardIndex1 = prompt(phrase);
+    if (cardIndex1 === null) { return; }
+    cardIndex1 = parseInt(cardIndex1);
+    while (isNaN(cardIndex1) || cardIndex1 < 0 || cardIndex1 > cards.length - 1) {
+      cardIndex1 = parseInt(prompt(`Invalid selection. Try again.\n ${phrase}`));
+    }
+    const card1 = cards[cardIndex1];
 
-    const card2Index = cardSelection(shuffledCards, cardIndexLabels, 2);
-    if (card2Index === null) { break; }
-    const card2 = shuffledCards[card2Index];
+    selectionNum = 2;
+    let cardIndex2 = prompt(phrase);
+    if (cardIndex2 === null) { return; }
+    cardIndex1 = parseInt(cardIndex1);
+    while (isNaN(cardIndex2) || cardIndex2 < 0 || cardIndex2 > cards.length - 1 || cardIndex2 === cardIndex1) {
+      cardIndex2 = parseInt(prompt(`Invalid selection. Try again.\n ${phrase}`));
+    }
+    const card2 = cards[cardIndex2];
 
-    if (card1Index !== card2Index && card1 === card2) {
-      shuffledCards[card1Index] = MATCH_CHAR;
-      shuffledCards[card2Index] = MATCH_CHAR;
+    if (card1 === card2) {
+      cards[cardIndex1] = MATCH_CHAR;
+      cards[cardIndex2] = MATCH_CHAR;
     }
 
-    isWin = checkWinCondition(shuffledCards);
+    isWin = checkWinCondition(cards);
   }
 }
 
 function cardSelection(cards, cardIndexLabels, selectionNum) {
-  return prompt(`Cards: ${cards.join(', ')} \nIndex: ${cardIndexLabels.join(', ')} \nEnter index to select card ${selectionNum}`);
+  return cardIndex1;
 }
 
 function checkWinCondition(cards) {
