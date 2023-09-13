@@ -80,7 +80,10 @@ function runGame() {
       alert(`${phrase2} \nCards ${card1} and ${card2} don't match.`);
     }
 
-    isWin = checkWinCondition(cards);
+    isWin = checkWinCondition(cardIndexLabels);
+    if (isWin) {
+      alert("You won!");
+    }
   }
 }
 
@@ -88,14 +91,7 @@ function cardSelection(cards, cardIndexLabels, selectionNum) {
   return cardIndex1;
 }
 
-function checkWinCondition(cards) {
-  for (let i = 0; i < cards.length - 3; i++) {
-    const card = cards[i];
-    if (card !== MATCH_CHAR) {
-      return false;
-    }
-  }
-  // all cards matched or only 2 cards remain
-  alert("You won!");
+function checkWinCondition(cardIndexLabels) {
+  if (cardIndexLabels.length > 2) { return false; }
   return true;
 }
