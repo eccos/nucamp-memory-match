@@ -38,18 +38,17 @@ function runGame() {
   const pairCards = uniqueCards.concat(uniqueCards);
   const cards = shuffle(pairCards);
   console.log("Shuffled Cards: " + cards);
-
   const cardIndexLabels = [];
   for (let i = 0; i < cards.length; i++) {
     cardIndexLabels.push(i);
   }
+    
+  const enterIndexPhrase = `Enter index to select card`;
+  const invalidPhrase = `Invalid selection. Try again.`;
 
   let isWin = false;
   while (!isWin) {
     let selectionNum = 1;
-    const enterIndexPhrase = `Enter index to select card`;
-    const invalidPhrase = `Invalid selection. Try again.`;
-
     let cardIndex1 = prompt(`${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
     if (cardIndex1 === null) { return; }
     cardIndex1 = parseInt(cardIndex1);
@@ -65,13 +64,13 @@ function runGame() {
     if (cardIndex2 === null) { return; }
     cardIndex2 = parseInt(cardIndex2);
     while (isNaN(cardIndex2) || !cardIndexLabels.includes(cardIndex2) || cardIndex2 === cardIndex1) {
-      cardIndex2 = prompt(`${invalidPhrase} \nSelected card ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+      cardIndex2 = prompt(`${invalidPhrase} \nFlipped card: ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
       if (cardIndex2 === null) { return; }
       cardIndex2 = parseInt(cardIndex2);
     }
     const card2 = cards[cardIndex2];
 
-    let phrase2 = `Flipped over card at index ${cardIndex2} to reveal ${card2}.`
+    let phrase2 = `Flipped over card at index ${cardIndex2} to reveal ${card2}.`;
     if (card1 === card2) {
       alert(`${phrase2} \nCards ${card1} and ${card2} match!`);
       cardIndexLabels.splice(cardIndexLabels.indexOf(cardIndex1), 1);
@@ -85,10 +84,6 @@ function runGame() {
       alert("You won!");
     }
   }
-}
-
-function cardSelection(cards, cardIndexLabels, selectionNum) {
-  return cardIndex1;
 }
 
 function checkWinCondition(cardIndexLabels) {
