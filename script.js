@@ -68,11 +68,13 @@ function cardSelection(cards, cardIndexLabels, selectionNum) {
 }
 
 function checkWinCondition(cards) {
-  for (const card of cards) {
-    if (card !== null) {
+  for (let i = 0; i < cards.length - 3; i++) {
+    const card = cards[i];
+    if (card !== MATCH_CHAR) {
       return false;
     }
   }
+  // all cards matched or only 2 cards remain
   alert("You won!");
   return true;
 }
