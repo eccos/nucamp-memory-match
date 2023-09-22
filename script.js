@@ -1,3 +1,24 @@
+/**
+ * @type {HTMLSelectElement}
+ */
+const selectGrid = document.querySelector("#select-grid-size");
+selectGrid.addEventListener("change", (e) => {
+    const grid = document.querySelector("#card-grid");
+    clearChildrenOfElem(grid);
+    const [x, y] = e.currentTarget.value.split("x");
+    const gridRows = createCustomGrid(x, y);
+    gridRows.forEach(row => {
+        grid.appendChild(row);
+    })
+});
+
+function clearChildrenOfElem(elem) {
+    const children = elem.children;
+    while (elem.firstChild) {
+        elem.removeChild(elem.firstChild);
+    }
+}
+
 function chooseRandomNumber(array) {
     var randomNumber = Math.floor(Math.random() * array.length);
     console.log(randomNumber);
