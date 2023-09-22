@@ -89,28 +89,43 @@ function createUniqueCards(gridSize) {
 	}
 	return uniqueCards;
 }
-createGrid(6, 5);
-function createGrid(xCards, yCards) {
-	const gridSize = xCards * yCards;
+
+function createCustomGrid(rowCardLen, colCardLen) {
+	const gridSize = rowCardLen * colCardLen;
+	const rowCardLimit = 12;
+	const colCardLimit = 6;
+	if (rowCardLen > rowCardLimit) {
+		console.error(`Row can only have ${rowCardLimit} cards max`);
+		return;
+	}
+	if (colCardLen > colCardLimit) {
+		console.error(`Column can only have ${colCardLimit} cards max`);
+		return;
+	}
 	if (gridSize % 2 !== 0) {
-		console.error("Grid size cannot be an odd number");
+		console.error("Grid cannot have an odd number of cards");
 		return;
 	}
 	const uniqueCards = createUniqueCards(gridSize);
 	const pairCards = uniqueCards.concat(uniqueCards);
 	const cards = shuffle(pairCards);
-	console.log("Unique cards: ", uniqueCards);
-	console.log("Paired cards: ", pairCards);
-	console.log("Shuffled cards: ", cards);
 
-	const grid = 0;
-	let cardId = 1;
-	for (let row = 0; row < xCards; row++) {
+	const rows = [];
+	let cardIndex = 1;
+	for (let row = 0; row < colCardLen; row++) {
 		// create html row
-		for (let col = 0; col < yCards; col++) {
+		const row = createDomRow();
+		for (let col = 0; col < rowCardLen; col++) {
 			// create html col & create/append card
+			const col = createDomCol();
+			const cardId = "card-" + cardIndex++;
+			const card = createDomCard(cardId, cards[cardIndex]);
+			col.appendChild(card);
+			row.appendChild(col);
 		}
+		rows.push(row);
 	}
+	return rows;
 }
 
 function createDomRow() {
@@ -121,17 +136,19 @@ function createDomRow() {
 }
 
 function createDomCol() {
-	// <div class="col-sm-4">
+	// <div class="col">
 	const elem = document.createElement("div");
-	elem.className = "col-sm-4";
+	elem.className = "col";
 	return elem;
 }
 
-function createDomCard(i) {
-	// <img src="card-back.png" class="img-fluid" id="card-1">
+function createDomCard(id, value) {
+	// <img src="card-back.png" class="img-fluid" id="card-1" alt="facedown card">
 	const elem = document.createElement("img");
 	elem.src = "card-back.png";
 	elem.className = "img-fluid";
-	elem.id = "card" + i;
+	elem.id = id;
+	elem.alt = "facedown card";
+	elem.textContent = value;
 	return elem;
 }
