@@ -132,15 +132,16 @@ function createCustomGrid(rowCardLen, colCardLen) {
     const cards = shuffle(pairCards);
 
     const rows = [];
-    let cardIndex = 1;
+    let cardIndex = 0;
     for (let row = 0; row < colCardLen; row++) {
         // create html row
         const row = createDomRow();
         for (let col = 0; col < rowCardLen; col++) {
             // create html col & create/append card
             const col = createDomCol();
-            const cardId = "card-" + cardIndex++;
+            const cardId = "card-" + (cardIndex + 1);
             const card = createDomCard(cardId, cards[cardIndex]);
+            cardIndex++;
             col.appendChild(card);
             row.appendChild(col);
         }
