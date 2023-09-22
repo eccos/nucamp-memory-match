@@ -97,14 +97,41 @@ function createGrid(xCards, yCards) {
 		return;
 	}
 	const uniqueCards = createUniqueCards(gridSize);
-	console.log("Unique cards: ", uniqueCards);
-	// const uniqueCards = [1, 2, 3];
 	const pairCards = uniqueCards.concat(uniqueCards);
-	console.log("Paired cards: ", pairCards);
 	const cards = shuffle(pairCards);
+	console.log("Unique cards: ", uniqueCards);
+	console.log("Paired cards: ", pairCards);
 	console.log("Shuffled cards: ", cards);
-	const cardIndexLabels = [];
-	for (let i = 0; i < cards.length; i++) {
-		cardIndexLabels.push(i);
+
+	const grid = 0;
+	let cardId = 1;
+	for (let row = 0; row < xCards; row++) {
+		// create html row
+		for (let col = 0; col < yCards; col++) {
+			// create html col & create/append card
+		}
 	}
+}
+
+function createDomRow() {
+	// <div class="row">
+	const elem = document.createElement("div");
+	elem.className = "row";
+	return elem;
+}
+
+function createDomCol() {
+	// <div class="col-sm-4">
+	const elem = document.createElement("div");
+	elem.className = "col-sm-4";
+	return elem;
+}
+
+function createDomCard(i) {
+	// <img src="card-back.png" class="img-fluid" id="card-1">
+	const elem = document.createElement("img");
+	elem.src = "card-back.png";
+	elem.className = "img-fluid";
+	elem.id = "card" + i;
+	return elem;
 }
