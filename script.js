@@ -47,25 +47,57 @@ function runGame() {
   let isWin = false;
   while (!isWin) {
     let selectionNum = 1;
-    let cardIndex1 = prompt(`${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
-    if (cardIndex1 === null) { return; }
-    cardIndex1 = parseInt(cardIndex1);
-    while (isNaN(cardIndex1) || !cardIndexLabels.includes(cardIndex1)) {
-      cardIndex1 = prompt(`${invalidPhrase} \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
-      if (cardIndex1 === null) { return; }
-      cardIndex1 = parseInt(cardIndex1);
+
+    let card_1 = document.getElementById("card-1");
+    card_1.addEventListener("click", cardFunction)
+    let card_2 = document.getElementById("card-2");
+    card_2.addEventListener("click", cardFunction)
+    let card_3 = document.getElementById("card-3");
+    card_3.addEventListener("click", cardFunction)
+    let card_4 = document.getElementById("card-4");
+    card_4.addEventListener("click", cardFunction)
+    let card_5 = document.getElementById("card-5");
+    card_5.addEventListener("click", cardFunction)
+    let card_6 = document.getElementById("card-6");
+    card_6.addEventListener("click", cardFunction)
+
+    let randomCards = [card_1, card_2, card_3, card_4, card_5, card_6];
+    const uniqueCards = [1, 2, 3];
+    const pairCards = uniqueCards.concat(uniqueCards);
+    const cardValues = shuffle(pairCards); // [3, 1, 3, 2, 1, 2];
+    for(let i = 0; i < randomCards.length; i++){
+      randomCards[i].cardVar = cardValues[i];
     }
+    function cardFunction(e){
+      const card = e.currentTarget;
+      console.log(card);
+    }
+
+
+
+
+
+    // let cardIndex1 = prompt(`${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+    // if (cardIndex1 === null) { return; }
+    // cardIndex1 = parseInt(cardIndex1);
+ 
+    // while (isNaN(cardIndex1) || !cardIndexLabels.includes(cardIndex1)) {
+    //   cardIndex1 = prompt(`${invalidPhrase} \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+    //   if (cardIndex1 === null) { return; }
+    //   cardIndex1 = parseInt(cardIndex1);
+    // }
+  
     const card1 = cards[cardIndex1];
 
     selectionNum = 2;
     let cardIndex2 = prompt(`Flipped over card at index ${cardIndex1} to reveal ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
     if (cardIndex2 === null) { return; }
     cardIndex2 = parseInt(cardIndex2);
-    while (isNaN(cardIndex2) || !cardIndexLabels.includes(cardIndex2) || cardIndex2 === cardIndex1) {
-      cardIndex2 = prompt(`${invalidPhrase} \nFlipped card: ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
-      if (cardIndex2 === null) { return; }
-      cardIndex2 = parseInt(cardIndex2);
-    }
+    // while (isNaN(cardIndex2) || !cardIndexLabels.includes(cardIndex2) || cardIndex2 === cardIndex1) {
+    //   cardIndex2 = prompt(`${invalidPhrase} \nFlipped card: ${card1}. \n${enterIndexPhrase} ${selectionNum} \n${cardIndexLabels.join(', ')}`);
+    //   if (cardIndex2 === null) { return; }
+    //   cardIndex2 = parseInt(cardIndex2);
+    // }
     const card2 = cards[cardIndex2];
 
     let phrase2 = `Flipped over card at index ${cardIndex2} to reveal ${card2}.`;
