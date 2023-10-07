@@ -206,8 +206,9 @@ for (let i = 0; i < cards.length; i++) {
     card.addEventListener("click", clickLogic);
     cardsH[i].style.visibility = "hidden";
 }
-
+let attemptCount = 0;
 function clickLogic(e) {
+   
     const self = e.currentTarget;
     // console.log(self.cardNumber);
     // alert(self.cardNumber);
@@ -220,7 +221,7 @@ function clickLogic(e) {
         return;
     }
     selectedCard2 = self;
-
+    attemptCount++;
     // compare cards
     if (selectedCard1.cardNumber === selectedCard2.cardNumber) {
         alert(`Cards ${selectedCard1.cardNumber} and ${selectedCard2.cardNumber} match!`);
@@ -246,6 +247,6 @@ function clickLogic(e) {
 
     isWin = checkWinCondition(cards);
     if (isWin) {
-        alert("You won!");
+        alert(`You won! ${attemptCount} attempts`);
     }
 }
